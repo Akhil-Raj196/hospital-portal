@@ -1,5 +1,4 @@
-import MainHeader from "../components/MainHeader";
-import MainFooter from "../components/MainFooter";
+import PublicPageLayout from "../components/PublicPageLayout";
 
 
 const departmentData = [
@@ -46,28 +45,24 @@ const departmentData = [
 ];
 
 const Departments = () => (
-  <div className="flex flex-col min-h-screen bg-gray-50">
-    <MainHeader />
-    <div className="flex-1 flex flex-col items-center justify-center">
-      <div className="max-w-5xl mx-auto p-8">
-        <h1 className="text-2xl font-bold mb-8 text-blue-700">Departments</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+  <PublicPageLayout>
+    <div className="mx-auto max-w-6xl">
+      <h1 className="mb-8 text-2xl font-bold text-blue-700 sm:text-3xl">Departments</h1>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {departmentData.map((dept) => (
-            <div key={dept.name} className="bg-white rounded-lg shadow p-4 flex flex-col items-center">
+            <div key={dept.name} className="flex flex-col items-center rounded-xl bg-white p-4 shadow-sm">
               <img
                 src={dept.image}
                 alt={dept.name}
-                className="w-full h-40 object-cover rounded mb-4 border"
+                className="mb-4 h-40 w-full rounded border object-cover"
               />
               <h2 className="text-lg font-semibold text-blue-800 mb-2">{dept.name}</h2>
               <p className="text-gray-600 text-center">{dept.desc}</p>
             </div>
           ))}
-        </div>
       </div>
     </div>
-    <MainFooter />
-  </div>
+  </PublicPageLayout>
 );
 
 export default Departments;

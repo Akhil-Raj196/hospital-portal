@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import Dashboard from './Pages/Dashboard';
@@ -23,9 +23,23 @@ import ArtClinic from './Pages/ArtClinic';
 import ContactUs from './Pages/ContactUs';
 import Career from './Pages/Career';
 
-function PrivateRoute({ children }) {
+function PrivateRoute() {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  return isLoggedIn ? children : <Login />;
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100 lg:flex">
+      <Sidebar />
+      <div className="min-w-0 flex-1">
+        <Navbar />
+        <div className="px-3 pb-6 sm:px-4 lg:px-6">
+          <Outlet />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function App() {
@@ -34,7 +48,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/main" element={<Main />} />
-        {/* Standalone public pages */}
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/departments" element={<Departments />} />
         <Route path="/patient-visitors" element={<PatientVisitors />} />
@@ -42,36 +55,20 @@ function App() {
         <Route path="/art-clinic" element={<ArtClinic />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/career" element={<Career />} />
-
-        {/* Private dashboard pages */}
-        <Route
-          path="/*"
-          element={
-            <PrivateRoute>
-              <div className="flex">
-                <Sidebar />
-                <div className="flex-1 min-h-screen bg-gray-100">
-                  <Navbar />
-                  <div className="p-6">
-                    <Routes>
-                      <Route path="/" element={<Dashboard />} />
-                      <Route path="patients" element={<Patients />} />
-                      <Route path="doctors" element={<Doctors />} />
-                      <Route path="staff" element={<Staff />} />
-                      <Route path="beds" element={<Beds />} />
-                      <Route path="appointments" element={<Appointments />} />
-                      <Route path="billing" element={<Billing />} />
-                      <Route path="pharmacy" element={<Pharmacy />} />
-                      <Route path="lab-reports" element={<LabReports />} />
-                      <Route path="analytics" element={<Analytics />} />
-                      <Route path="settings" element={<Settings />} />
-                    </Routes>
-                  </div>
-                </div>
-              </div>
-            </PrivateRoute>
-          }
-        />
+        <Route path="/" element={<PrivateRoute />}>
+          <Route index element={<Dashboard />} />
+          <Route path="patients" element={<Patients />} />
+          <Route path="doctors" element={<Doctors />} />
+          <Route path="staff" element={<Staff />} />
+          <Route path="beds" element={<Beds />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="billing" element={<Billing />} />
+          <Route path="pharmacy" element={<Pharmacy />} />
+          <Route path="lab-reports" element={<LabReports />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/main" replace />} />
       </Routes>
     </BrowserRouter>
   );

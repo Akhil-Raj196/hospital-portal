@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MainHeader from "../components/MainHeader";
-import MainFooter from "../components/MainFooter";
 import ImageSlider from "../components/ImageSlider";
+import PublicPageLayout from "../components/PublicPageLayout";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -10,26 +9,25 @@ const Main = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-
-
   const handleAdminLogin = (e) => {
     e.preventDefault();
-    if (username === "demo" && password === "demo123") {
+    const normalizedUsername = username.trim().toLowerCase();
+    const normalizedPassword = password.trim();
+
+    if (normalizedUsername === "demo" && normalizedPassword === "demo123") {
       localStorage.setItem("isLoggedIn", "true");
-      navigate("/");
+      navigate("/", { replace: true });
     } else {
       setError("Invalid credentials. Use demo/demo123");
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <MainHeader />
-      <div className="flex-1 flex flex-col items-center justify-center">
+    <PublicPageLayout contentClassName="px-0 pb-0 pt-16 sm:pt-20">
+      <div className="flex flex-1 flex-col items-center">
         <ImageSlider />
-        <div className="m-0.5 w-full overflow-x-auto whitespace-nowrap bg-red-50 border-b border-red-200">
-          <div className="inline-block animate-scroll text-lg text-red-600 px-2 py-1">
+        <div className="m-0.5 w-full overflow-x-hidden whitespace-nowrap border-b border-red-200 bg-red-50">
+          <div className="animate-scroll inline-block px-2 py-1 text-sm text-red-600 sm:text-base lg:text-lg">
             Address: 80 Feet Rd, Central Plaza Colony, Ratnapuri, Ratlam, Madhya Pradesh 457001 | Phone: 07412 264 520
           </div>
         </div>
@@ -44,17 +42,17 @@ const Main = () => {
             animation: scroll 18s linear infinite;
           }
         `}</style>
-        <div className="mt-8 max-w-2xl text-center">
-          <h1 className="text-3xl font-bold mb-4 text-blue-700">Welcome to Ridhaan Hospital Management</h1>
-          <p className="text-lg text-gray-700 mb-4">
+        <div className="mx-auto mt-8 max-w-3xl px-4 text-center sm:px-6">
+          <h1 className="mb-4 text-3xl font-bold text-blue-700 sm:text-4xl">Welcome to Ridhaan Hospital Management</h1>
+          <p className="mb-4 text-base text-gray-700 sm:text-lg">
             Manage patients, staff, appointments, billing, and more with a beautiful, powerful, and easy-to-use interface.
           </p>
         </div>
         {showAdminLogin && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 px-4">
             <form
               onSubmit={handleAdminLogin}
-              className="bg-white p-8 rounded shadow w-80 relative"
+              className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-lg sm:p-8"
             >
               <button
                 type="button"
@@ -63,16 +61,16 @@ const Main = () => {
               >
                 &times;
               </button>
-              <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">Admin Login</h2>
+              <h2 className="mb-6 text-center text-2xl font-bold text-blue-700">Admin Login</h2>
               {error && <div className="text-red-500 mb-2 text-center">{error}</div>}
               <input
-                className="w-full border p-2 mb-4 rounded"
+                className="mb-4 w-full rounded border p-3"
                 placeholder="Username"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
               />
               <input
-                className="w-full border p-2 mb-4 rounded"
+                className="mb-4 w-full rounded border p-3"
                 placeholder="Password"
                 type="password"
                 value={password}
@@ -80,7 +78,7 @@ const Main = () => {
               />
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition"
+                className="w-full rounded bg-blue-600 py-2 font-semibold text-white transition hover:bg-blue-700"
               >
                 Login
               </button>
@@ -91,8 +89,7 @@ const Main = () => {
           </div>
         )}
       </div>
-      <MainFooter />
-    </div>
+    </PublicPageLayout>
   );
 };
 

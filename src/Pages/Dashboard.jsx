@@ -19,10 +19,10 @@ const Dashboard = () => {
   const recentAppointments = [...appointments].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+    <div className="px-2 sm:px-4 md:px-8 py-2 w-full">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6">Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <Card title="Total Patients" value={patients.length} />
         <Card title="Doctors" value={doctors.length} />
         <Card title="Staff" value={staff.length} />
@@ -32,24 +32,24 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Recent Appointments */}
-        <div className="bg-white rounded shadow p-4">
+        <div className="bg-white rounded shadow p-4 overflow-x-auto">
           <h2 className="text-lg font-semibold mb-3">Recent Appointments</h2>
-          <table className="min-w-full">
+          <table className="min-w-full text-sm">
             <thead>
               <tr className="bg-gray-100">
-                <th className="py-1 px-2 text-left">Patient</th>
-                <th className="py-1 px-2 text-left">Doctor</th>
-                <th className="py-1 px-2 text-left">Date</th>
-                <th className="py-1 px-2 text-left">Status</th>
+                <th className="py-1 px-2 text-left whitespace-nowrap">Patient</th>
+                <th className="py-1 px-2 text-left whitespace-nowrap">Doctor</th>
+                <th className="py-1 px-2 text-left whitespace-nowrap">Date</th>
+                <th className="py-1 px-2 text-left whitespace-nowrap">Status</th>
               </tr>
             </thead>
             <tbody>
               {recentAppointments.map(a => (
                 <tr key={a.id} className="border-b last:border-b-0">
-                  <td className="py-1 px-2">{a.patient}</td>
-                  <td className="py-1 px-2">{a.doctor}</td>
-                  <td className="py-1 px-2">{a.date}</td>
-                  <td className="py-1 px-2">{a.status}</td>
+                  <td className="py-1 px-2 whitespace-nowrap">{a.patient}</td>
+                  <td className="py-1 px-2 whitespace-nowrap">{a.doctor}</td>
+                  <td className="py-1 px-2 whitespace-nowrap">{a.date}</td>
+                  <td className="py-1 px-2 whitespace-nowrap">{a.status}</td>
                 </tr>
               ))}
             </tbody>
@@ -57,7 +57,7 @@ const Dashboard = () => {
         </div>
 
         {/* Overview Pie Chart Placeholder */}
-        <div className="bg-white rounded shadow p-4 flex flex-col items-center justify-center">
+        <div className="bg-white rounded shadow p-4 flex flex-col items-center justify-center mt-4 md:mt-0">
           <h2 className="text-lg font-semibold mb-3">Overview</h2>
           <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mb-2">
             <span className="text-gray-400">[Pie Chart]</span>

@@ -18,11 +18,11 @@ const ImageSlider = () => {
   }, []);
 
   return (
-    <div className="w-full rounded-lg overflow-hidden shadow-lg">
+    <div className="w-full overflow-hidden rounded-none shadow-lg sm:rounded-lg">
       <img
         src={images[index]}
         alt="Hospital Slide"
-        className="w-full h-[350px] md:h-[450px] object-cover transition-all duration-700"
+        className="h-[240px] w-full object-cover transition-all duration-700 sm:h-[320px] md:h-[420px] lg:h-[500px]"
       />
       <div className="flex justify-center gap-2 py-2 bg-white">
         {images.map((_, i) => (

@@ -9,49 +9,52 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Demo credentials
-    if (username === "demo" && password === "demo123") {
+    const normalizedUsername = username.trim().toLowerCase();
+    const normalizedPassword = password.trim();
+
+    if (normalizedUsername === "demo" && normalizedPassword === "demo123") {
       localStorage.setItem("isLoggedIn", "true");
-      navigate("/");
+      navigate("/", { replace: true });
     } else {
       setError("Invalid credentials. Use demo/demo123");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
-      <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow w-80">
-        <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">Admin Login</h2>
-        {error && <div className="text-red-500 mb-2 text-center">{error}</div>}
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300 px-4 py-6 sm:px-6">
+      <form
+        onSubmit={handleLogin}
+        className="w-full max-w-md rounded-2xl bg-white p-5 shadow-lg sm:p-8"
+      >
+        <h2 className="mb-6 text-center text-2xl font-bold text-blue-700 sm:text-3xl">Admin Login</h2>
+        {error && <div className="mb-2 text-center text-sm text-red-500 sm:text-base">{error}</div>}
         <input
-          className="w-full border p-2 mb-4 rounded"
+          className="mb-4 w-full rounded border p-3 text-base sm:text-lg"
           placeholder="Username"
           value={username}
           onChange={e => setUsername(e.target.value)}
         />
         <input
-          className="w-full border p-2 mb-4 rounded"
+          className="mb-4 w-full rounded border p-3 text-base sm:text-lg"
           placeholder="Password"
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition mb-2"
-          onClick={() => navigate('/')}
-        >
-          Login
-        </button>
-        <button
-          type="button"
-          className="w-full bg-gray-300 text-gray-700 py-2 rounded font-semibold hover:bg-gray-400 transition"
-          onClick={() => navigate('/main')}
-        >
-          Cancel
-        </button>
-        <div className="mt-4 text-xs text-gray-500 text-center">
-          Demo: demo / demo123
+        <div className="flex flex-col sm:flex-row gap-2 mt-2">
+          <button type="submit" className="mb-2 w-full rounded bg-blue-600 py-2 text-white transition hover:bg-blue-700 sm:mb-0 sm:w-1/2">
+            Login
+          </button>
+          <button
+            type="button"
+            className="w-full rounded bg-gray-300 py-2 text-gray-700 transition hover:bg-gray-400 sm:w-1/2"
+            onClick={() => navigate('/main', { replace: true })}
+          >
+            Cancel
+          </button>
+        </div>
+        <div className="mt-4 text-center text-xs text-gray-500 sm:text-sm">
+          Demo: <span className="font-mono">demo</span> / <span className="font-mono">demo123</span>
         </div>
       </form>
     </div>
