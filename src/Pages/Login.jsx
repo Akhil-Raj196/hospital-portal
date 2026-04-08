@@ -39,6 +39,7 @@ const Login = () => {
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition mb-2"
+          onClick={() => navigate('/')}
         >
           Login
         </button>
